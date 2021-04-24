@@ -1,7 +1,7 @@
-package com.example.C868CapstoneProject.Book;
+package com.example.C868CapstoneProject.Configuration;
 
-import java.util.List;
-
+import com.example.C868CapstoneProject.Repository.BookRepository;
+import com.example.C868CapstoneProject.model.Book;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

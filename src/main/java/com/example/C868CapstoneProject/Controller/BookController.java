@@ -1,7 +1,9 @@
-package com.example.C868CapstoneProject.Book;
+package com.example.C868CapstoneProject.Controller;
 
 import java.util.List;
 
+import com.example.C868CapstoneProject.Service.BookService;
+import com.example.C868CapstoneProject.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
-package com.example.C868CapstoneProject.Charge;
+package com.example.C868CapstoneProject.Configuration;
 
-import java.util.List;
-
+import com.example.C868CapstoneProject.Repository.ChargeRepository;
+import com.example.C868CapstoneProject.model.Charge;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

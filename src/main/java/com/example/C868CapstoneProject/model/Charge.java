@@ -1,4 +1,4 @@
-package com.example.C868CapstoneProject.Charge;
+package com.example.C868CapstoneProject.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

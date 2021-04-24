@@ -1,7 +1,8 @@
-package com.example.C868CapstoneProject.Book;
+package com.example.C868CapstoneProject.Repository;
 
 import java.util.Optional;
 
+import com.example.C868CapstoneProject.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

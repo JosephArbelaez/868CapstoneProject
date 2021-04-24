@@ -1,4 +1,4 @@
-package com.example.C868CapstoneProject.Book;
+package com.example.C868CapstoneProject.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
