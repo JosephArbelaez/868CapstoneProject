@@ -63,7 +63,12 @@ public class Book {
 			columnDefinition = "BOOLEAN"
 	)
 	private boolean status;
-	
+
+	@ManyToOne
+	@JoinColumn(name="patronID", nullable=true)
+	private Patron patron;
+
+
 	public Book () {
 		
 	}
@@ -79,6 +84,20 @@ public class Book {
 		this.price = price;
 		this.genre = genre;
 		this.status = status;
+	}
+
+	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre,
+				boolean status, Patron patron) {
+		super();
+		this.isbn = isbn;
+		this.title = title;
+		this.author = author;
+		this.description = description;
+		this.pageCount = pageCount;
+		this.price = price;
+		this.genre = genre;
+		this.status = status;
+		this.patron = patron;
 	}
 
 
@@ -146,6 +165,12 @@ public class Book {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-	
+
+	public Patron getPatron() {
+		return patron;
+	}
+
+	public void setPatron(Patron patron) {
+		this.patron = patron;
+	}
 }

@@ -1,13 +1,8 @@
 package com.example.C868CapstoneProject.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
-
-import javax.persistence.Column;
 
 @Entity(name = "Charge")
 public class Charge {
@@ -48,7 +43,11 @@ public class Charge {
 			columnDefinition = "TEXT"
 	)
 	private String description;
-	
+
+	@ManyToOne
+	@JoinColumn(name="patronID", nullable=true)
+	private Patron patron;
+
 	public Charge() {
 		
 	}
@@ -58,6 +57,14 @@ public class Charge {
 		this.type = type;
 		this.price = price;
 		this.description = description;
+	}
+
+	public Charge(String type, double price, String description, Patron patron) {
+		super();
+		this.type = type;
+		this.price = price;
+		this.description = description;
+		this.patron = patron;
 	}
 
 	public Long getId() {
@@ -90,6 +97,14 @@ public class Charge {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Patron getPatron() {
+		return patron;
+	}
+
+	public void setPatron(Patron patron) {
+		this.patron = patron;
 	}
 
 	@Override
