@@ -1,38 +1,39 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import './App.css';
 import axios from 'axios';
+import Navbar from './components/Navbar/Navbar';
+import Page from './components/Page/Page';
 
-const BookProfiles = () => {
-
-  const [bookProfiles, setBookProfiles] = useState([]);
-
-  const fetchBookProfiles = () => {
-    axios.get('https://c868finalproject.herokuapp.com/api/v1/book').then(res => {
-      console.log(res);
-      setBookProfiles(res.data);
-    });
-  };
-
-  useEffect(() => {
-    fetchBookProfiles();
-  }, []);
-
-  return bookProfiles.map((bookProfile, index) => {
-      return (
-        <div key ={index}>
-          <h1>{bookProfile.title}</h1>
-          <p>{bookProfile.isbn}</p>
-        </div>
-      );
-    });
-};
-
-function App() {
-  return (
-    <div className="App">
-      <BookProfiles />
-    </div>
-  );
+const initialState = {
+  page: "home"
 }
+
+
+class App extends Component {
+
+  constructor() {
+    super();
+    this.state = initialState;
+  }
+
+  pageChange = (page) => {
+    console.log(page);
+    this.setState({page: page});
+  }
+
+  render() {
+    const { page } = this.state;
+
+    return (
+      <div>
+        <div className="App">
+          <Navbar pageChange={this.pageChange}/>
+          <Page page = {page} pageChange={this.pageChange}/>
+          </div>
+      </div>
+    );
+  }
+}
+
 
 export default App;

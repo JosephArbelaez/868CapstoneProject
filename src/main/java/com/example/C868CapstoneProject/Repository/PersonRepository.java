@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
+    Person findByUsername(String username);
+
+    @Query(value = "SELECT type from person WHERE id=?1", nativeQuery = true)
+    String findByType(Long id);
 }

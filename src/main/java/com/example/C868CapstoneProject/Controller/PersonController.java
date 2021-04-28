@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/person")
+@CrossOrigin("*")
 public class PersonController {
 
     private final PersonService personService;
@@ -35,6 +36,14 @@ public class PersonController {
                            @RequestParam(required = false) Long cardNumber,
                            @RequestBody Person person ) {
         personService.postPerson(person, type, cardNumber);
+    }
+
+    @GetMapping(path = "login")
+    public Person login(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password) {
+        System.out.println("Controller.login");
+       return personService.login(username, password);
     }
 
     @DeleteMapping(path = "{personID}")

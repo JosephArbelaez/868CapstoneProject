@@ -110,4 +110,13 @@ public class PersonService {
     public Person getPersonByID(Long personID) {
         return personRepository.findById(personID).get();
     }
+
+    public Person login(String username, String password) {
+        try {
+            return personRepository.findByUsername(username);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
