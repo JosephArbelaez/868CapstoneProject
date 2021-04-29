@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import AdminAccount from './AdminAccount';
 import Login from './Login';
 import UserAccount from './UserAccount';
+import BookCatalog from '../Catalog/BookCatalog';
 
 const initialState = {
     userID: '',
@@ -24,14 +25,12 @@ class Page extends Component {
             name: name,
             cardNumber: cardNumber,
         });
-        console.log(cardNumber);
-        console.log(this.state.cardNumber);
+
         if(this.state.cardNumber === undefined) {
             this.props.pageChange('adminAccount');
         } else {
             this.props.pageChange('userAccount')
         }
-        
     }
 
     renderSwitch(name, userID, cardNumber){
@@ -62,7 +61,7 @@ class Page extends Component {
             
             default:
                 return (
-                    <div>HOME</div>
+                    <BookCatalog />
                 )
         }
     }
