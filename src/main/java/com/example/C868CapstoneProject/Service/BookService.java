@@ -47,7 +47,7 @@ public class BookService {
 	}
 
 	@Transactional
-	public void updateBook(Long isbn, String title, String genre) {
+	public void updateBook(Long isbn, String title, String genre, String url) {
 		Book book = bookRepository.findBookByISBN(isbn).orElseThrow(
 				() -> new IllegalStateException (
 						"Book with ISBN " +
@@ -64,6 +64,12 @@ public class BookService {
 				genre.length() > 0 &&
 				!Objects.equals(book.getGenre(), genre)) {
 			book.setGenre(genre);
+		}
+
+		if (url != null &&
+				url.length() > 0 &&
+				!Objects.equals(book.getUrl(), url)) {
+			book.setGenre(url);
 		}
 	}
 	

@@ -38,8 +38,9 @@ public class BookController {
 		public void updateBook(
 				@PathVariable("isbn") Long isbn,
 				@RequestParam(required = false) String title,
-				@RequestParam(required = false) String genre) {
-			bookService.updateBook(isbn, title, genre);
+				@RequestParam(required = false) String genre,
+				@RequestParam(required = false) String url) {
+			bookService.updateBook(isbn, title, genre, url);
 		}
 		
 	}

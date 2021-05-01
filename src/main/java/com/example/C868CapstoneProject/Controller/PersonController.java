@@ -1,11 +1,10 @@
 package com.example.C868CapstoneProject.Controller;
 
 import com.example.C868CapstoneProject.Service.PersonService;
-import com.example.C868CapstoneProject.model.Admin;
-import com.example.C868CapstoneProject.model.Patron;
 import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -31,19 +30,25 @@ public class PersonController {
         return personService.getPersonByID(personID);
     }
 
+    @GetMapping(path = "/cardNumber")
+    public List<Long> getCardNumbers(){
+        return personService.getCardNumbers();
+    }
+
     @PostMapping(path = "{type}")
     public void postPerson(@PathVariable("type") String type,
                            @RequestParam(required = false) Long cardNumber,
                            @RequestBody Person person ) {
         personService.postPerson(person, type, cardNumber);
+
     }
 
     @GetMapping(path = "login")
     public Person login(
-            @RequestParam("username") String username,
+            @RequestParam("email") String email,
             @RequestParam("password") String password) {
         System.out.println("Controller.login");
-       return personService.login(username, password);
+       return personService.login(email, password);
     }
 
     @DeleteMapping(path = "{personID}")
@@ -56,9 +61,18 @@ public class PersonController {
             @PathVariable("personID") Long personID,
             @RequestParam(required = false) Long cardNumber,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String email,
             @RequestParam(required = false) String password) {
 
-            personService.updatePerson(personID, name,username, password, cardNumber);
+            personService.updatePerson(personID, name,email, password, cardNumber);
+    }
+
+    @GetMapping(path = "/confirm/{personID}")
+    public RedirectView updatePerson(
+            @PathVariable("personID") String personID) {
+            personService.registerPerson(Long.parseLong(personID));
+        RedirectView rv = new RedirectView();
+        rv.setUrl("127.0.0.1");
+        return rv;
     }
 }

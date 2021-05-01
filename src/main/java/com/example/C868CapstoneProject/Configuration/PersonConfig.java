@@ -17,13 +17,15 @@ public class PersonConfig {
         return args -> {
             Admin a = new Admin(
                     "Sally Rutherfield",
-                    "srut",
-                    "password"
+                    "srut@gmail.com",
+                    "password",
+                    "https://c868finalproject.s3.us-east-2.amazonaws.com/Sally.jpg"
             );
             Patron b = new Patron(
                     "Francis Freedmont",
-                    "Ffreed",
+                    "Ffreed@gmail.com",
                     "password",
+                    "https://c868finalproject.s3.us-east-2.amazonaws.com/Francis.jpg",
                     1234567L
             );
 

@@ -34,26 +34,49 @@ public class Person {
     private String name;
 
     @Column(
-            name = "username",
-            nullable = false,
+            name = "email",
+            nullable = true,
             columnDefinition = "TEXT"
     )
-    private String username;
+    private String email;
 
     @Column(
             name = "password",
-            nullable = false,
+            nullable = true,
             columnDefinition = "TEXT"
     )
     private String password;
 
+    @Column(
+            name = "url",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
+    private String url;
+
+    @Column(
+            name = "activated",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
+    private boolean activated;
+
     public Person() {
     }
 
-    public Person(String name, String username, String password) {
+    public Person(String name, String email, String password) {
         this.name = name;
-        this.username = username;
+        this.email = email;
         this.password = password;
+        this.activated = false;
+    }
+
+    public Person(String name, String email, String password, String url) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.url = url;
+        this.activated = false;
     }
 
     public Long getUserID() {
@@ -72,12 +95,12 @@ public class Person {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -88,13 +111,31 @@ public class Person {
         this.password = password;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "userID=" + userID +
                 ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", url='" + url + '\'' +
+                ", activated=" + activated +
                 '}';
     }
 }

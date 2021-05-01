@@ -23,11 +23,14 @@ public class Patron extends Person {
     public Patron() {
     }
 
-    public Patron(String name, String username, String password, Long cardNumber) {
-        super(name, username, password);
+    public Patron(String name, String email, String password, Long cardNumber) {
+        super(name, email, password);
         this.cardNumber = cardNumber;
     }
-
+    public Patron(String name, String email, String password, String url,Long cardNumber) {
+        super(name, email, password, url);
+        this.cardNumber = cardNumber;
+    }
     public Long getCardNumber() {
         return cardNumber;
     }

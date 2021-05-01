@@ -1,7 +1,5 @@
 package com.example.C868CapstoneProject.model;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import javax.persistence.*;
 
 @Entity(name = "Book")
@@ -55,14 +53,20 @@ public class Book {
 			columnDefinition = "TEXT"
 	)
 	private String genre;
-	
-	@Transient
+
 	@Column(
 			name = "status",
 			nullable = true,
 			columnDefinition = "BOOLEAN"
 	)
 	private boolean status;
+
+	@Column(
+			name = "url",
+			nullable = true,
+			columnDefinition = "TEXT"
+	)
+	private String url;
 
 	@ManyToOne
 	@JoinColumn(name="patronID", nullable=true)
@@ -72,9 +76,8 @@ public class Book {
 	public Book () {
 		
 	}
-
 	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre,
-			boolean status) {
+				boolean status) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -85,9 +88,21 @@ public class Book {
 		this.genre = genre;
 		this.status = status;
 	}
-
 	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre,
-				boolean status, Patron patron) {
+			boolean status, String url) {
+		super();
+		this.isbn = isbn;
+		this.title = title;
+		this.author = author;
+		this.description = description;
+		this.pageCount = pageCount;
+		this.price = price;
+		this.genre = genre;
+		this.status = status;
+		this.url = url;
+	}
+
+	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre, boolean status, String url,Patron patron) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -98,6 +113,7 @@ public class Book {
 		this.genre = genre;
 		this.status = status;
 		this.patron = patron;
+		this.url = url;
 	}
 
 
@@ -172,5 +188,13 @@ public class Book {
 
 	public void setPatron(Patron patron) {
 		this.patron = patron;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

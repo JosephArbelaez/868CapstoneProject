@@ -19,7 +19,8 @@ public class BookConfig {
 							416, 
 							12.74,
 							"Graphic Novels",
-							false);
+							false,
+							"https://images-na.ssl-images-amazon.com/images/I/410D4H0IqjL._SX318_BO1,204,203,200_.jpg");
 				Book unstoppable =new Book(9781250007148L,
 							"Unstoppable",
 							"Bill Nye",
@@ -27,8 +28,10 @@ public class BookConfig {
 							368,
 							17.99,
 							"NonFiction",
-							false);
-				Book book = new Book(9870316017923L,
+							false,
+							"https://pictures.abebooks.com/isbn/9781250007148-us.jpg"
+						);
+				Book book = new Book(316017930L,
 						"Outliers",
 						"Malcolm Gladwell",
 						"In this stunning book, Malcolm Gladwell takes us on an intellectual journey through the world of \"outliers\"--the best and the brightest, the most famous and the most successful. He asks the question: what makes high-achievers different?\n"
@@ -39,7 +42,8 @@ public class BookConfig {
 						321,
 						16.99,
 						"NonFiction",
-						true);
+						true,
+						"https://images-na.ssl-images-amazon.com/images/I/41LO6QRvIuL._SX331_BO1,204,203,200_.jpg");
 				repository.save(watchmen);
 				repository.save(unstoppable);
 				repository.save(book);

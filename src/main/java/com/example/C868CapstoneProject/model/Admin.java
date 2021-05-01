@@ -13,7 +13,10 @@ public class Admin extends Person {
     public Admin() {
     }
 
-    public Admin(String name, String username, String password) {
-        super(name, username, password);
+    public Admin(String name, String email, String password) {
+        super(name, email, password);
+    }
+    public Admin(String name, String email, String password, String url) {
+        super(name, email, password, url);
     }
 }
