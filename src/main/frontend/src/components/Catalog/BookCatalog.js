@@ -9,7 +9,8 @@ const BookCatalog = ({ books }) => {
         )
     }
     return (
-        <div>
+        <div class ="bookCatalog">
+            <h2>Book Catalog</h2>
             {
                 books.map((book, i) => {
                     console.log(book);
@@ -23,7 +24,8 @@ const BookCatalog = ({ books }) => {
                             pageCount = {book.pageCount}
                             price = {book.price}
                             genre = {book.genre}
-                            status = {book.status}/>
+                            status = {book.status}
+                            url = {book.url}/>
                     );
                 })
             }

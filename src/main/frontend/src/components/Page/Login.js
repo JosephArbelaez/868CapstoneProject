@@ -6,12 +6,13 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            username: "",
+            email: "",
             password: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.login = this.login.bind(this);
+        this.toRegistration = this.toRegistration.bind(this);
     }
 
     handleChange(event) {
@@ -21,21 +22,25 @@ class Login extends Component {
     }
     login = (event) => {
         event.preventDefault()
-        const { username, password} = this.state;
+        const { email, password} = this.state;
 
         axios.get(
-            `http://localhost:8080/api/v1/person/login?username=${username}&password=${password}`
+            `http://localhost:8080/api/v1/person/login?email=${email}&password=${password}`
         ).then(res => {
-            this.props.login(res.data.userID, res.data.name, res.data.cardNumber);
+            this.props.login(res.data.userID, res.data.name, res.data.cardNumber, res.data.url);
         });
+    }
+
+    toRegistration = () => {
+        this.props.toRegistration();
     }
     render() {
         return (
             <div onSubmit={this.login} className="loginPage">
                 <form >
                     <label>
-                        Username:
-                        <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
+                        Email:
+                        <input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
                     </label>
                     <label>
                         Password:
@@ -43,6 +48,8 @@ class Login extends Component {
                     </label>
                     <input type="submit" value="Login" />
                 </form>
+                <br />
+                <button onClick={this.toRegistration}>Register</button>
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import BookCatalog from '../Catalog/BookCatalog';
+import UserCard from '../User/UserCard';
 
 class UserAccount extends Component {
 
@@ -22,11 +23,12 @@ class UserAccount extends Component {
     }
     render() {
         return (
-            <div>
-                <h1>UserAccount</h1>
-                <h1>{this.props.userID}</h1>
-                <h1>{this.props.name}</h1>
-                <h1>{this.props.cardNumber}</h1>
+            <div className = "userAccountPage">
+                <UserCard 
+                    userID = {this.props.userID}
+                    name = {this.props.name}
+                    cardNumber = {this.props.cardNumber}
+                    url = {this.props.url} />
                 <BookCatalog books={this.state.books}/>
             </div>
         );
