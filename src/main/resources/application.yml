@@ -1,0 +1,5 @@
+amazonProperties:
+  endpointUrl: https://s3.us-east-2.amazonaws.com
+  accessKey: AKIA2WXMN274TQCEQJ7U
+  secretKey: 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
+  bucketName: c868finalproject

@@ -48,28 +48,29 @@ public class ChargeService {
     }
 
     @Transactional
-    public void updateCharge(Long chargeID, String type, double price, String description) {
-        Charge charge = chargeRepository.findById(chargeID).orElseThrow(
+    public void updateCharge(Charge charge) {
+        Charge chargeTemp = chargeRepository.findById(charge.getId()).orElseThrow(
                 () -> new IllegalStateException (
                         "Charge with chargeID " +
-                                chargeID +
+                                charge.getId() +
                                 " does not exist."));
 
-        if (type != null &&
-                type.length() > 0 &&
-                !Objects.equals(charge.getType(), type)) {
-            charge.setType(type);
+        if (charge.getType() != null &&
+                charge.getType().length() > 0 &&
+                !Objects.equals(chargeTemp.getType(), charge.getType())) {
+            chargeTemp.setType(charge.getType());
         }
 
-        if (price != 0 &&
-                !Objects.equals(charge.getPrice(), price)) {
-            charge.setPrice(price);
+        if (charge.getPrice() != 0 &&
+                !Objects.equals(chargeTemp.getPrice(), charge.getPrice())) {
+            chargeTemp.setPrice(charge.getPrice());
         }
 
-        if (description != null &&
-                description.length() > 0 &&
-                !Objects.equals(charge.getDescription(), description)) {
-            charge.setDescription(description);
+        if (charge.getDescription() != null &&
+                charge.getDescription().length() > 0 &&
+                !Objects.equals(chargeTemp.getDescription(), charge.getDescription())) {
+            chargeTemp.setDescription(charge.getDescription());
         }
+        chargeRepository.save(chargeTemp);
     }
 }

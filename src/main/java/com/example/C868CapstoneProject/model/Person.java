@@ -2,6 +2,8 @@ package com.example.C868CapstoneProject.model;
 
 import javax.persistence.*;
 
+import java.util.Set;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -21,10 +23,11 @@ public class Person {
             generator = "user_sequence"
     )
     @Column(
-            name = "id",
-            updatable = false
+            name = "person_id",
+            updatable = false,
+            nullable = false
     )
-    private Long userID;
+    private Long id;
 
     @Column(
             name = "name",
@@ -61,6 +64,12 @@ public class Person {
     )
     private boolean activated;
 
+    @OneToMany
+    private Set<Charge> charges;
+
+    @OneToMany
+    private Set<Book> books;
+
     public Person() {
     }
 
@@ -80,11 +89,11 @@ public class Person {
     }
 
     public Long getUserID() {
-        return userID;
+        return id;
     }
 
     public void setUserID(Long userID) {
-        this.userID = userID;
+        this.id = userID;
     }
 
     public String getName() {
@@ -130,8 +139,8 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "userID=" + userID +
-                ", name='" + name + '\'' +
+                "userID=" + id + '\'' +
+                "name=" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", url='" + url + '\'' +

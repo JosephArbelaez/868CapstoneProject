@@ -4,6 +4,7 @@ import com.example.C868CapstoneProject.Service.BookService;
 import com.example.C868CapstoneProject.Service.ChargeService;
 import com.example.C868CapstoneProject.model.Book;
 import com.example.C868CapstoneProject.model.Charge;
+import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/charge")
+@CrossOrigin("*")
 public class ChargeController {
 
     private final ChargeService chargeService;
@@ -35,13 +37,10 @@ public class ChargeController {
         chargeService.deleteCharge(chargeID);
     }
 
-    @PutMapping(path = "{chargeID}")
+    @PutMapping
     public void updateCharge(
-            @PathVariable("chargeID") Long chargeID,
-            @RequestParam(required = false) String type,
-            @RequestParam(required = false) double price,
-            @RequestParam(required = false) String description) {
-        chargeService.updateCharge(chargeID, type, price, description);
+            @RequestBody Charge charge) {
+        chargeService.updateCharge(charge);
     }
 
 }

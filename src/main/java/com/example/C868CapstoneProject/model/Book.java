@@ -69,9 +69,8 @@ public class Book {
 	private String url;
 
 	@ManyToOne
-	@JoinColumn(name="patronID", nullable=true)
-	private Patron patron;
-
+	@JoinColumn(name="person_id")
+	private Person person;
 
 	public Book () {
 		
@@ -102,7 +101,7 @@ public class Book {
 		this.url = url;
 	}
 
-	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre, boolean status, String url,Patron patron) {
+	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre, boolean status, String url,Person p) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -112,7 +111,7 @@ public class Book {
 		this.price = price;
 		this.genre = genre;
 		this.status = status;
-		this.patron = patron;
+		this.person = p;
 		this.url = url;
 	}
 
@@ -182,12 +181,12 @@ public class Book {
 		this.status = status;
 	}
 
-	public Patron getPatron() {
-		return patron;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setPatron(Patron patron) {
-		this.patron = patron;
+	public void setPerson(Patron person) {
+		this.person = person;
 	}
 
 	public String getUrl() {

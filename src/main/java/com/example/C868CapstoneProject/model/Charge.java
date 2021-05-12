@@ -18,7 +18,7 @@ public class Charge {
 			generator = "charge_sequence"
 	)
 	@Column(
-		name = "id",
+		name = "charge_id",
 		updatable = false
 	)
 	private Long id;
@@ -45,8 +45,8 @@ public class Charge {
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name="patronID", nullable=true)
-	private Patron patron;
+	@JoinColumn(name="person_id")
+	private Person person;
 
 	public Charge() {
 		
@@ -59,12 +59,12 @@ public class Charge {
 		this.description = description;
 	}
 
-	public Charge(String type, double price, String description, Patron patron) {
+	public Charge(String type, double price, String description, Person p) {
 		super();
 		this.type = type;
 		this.price = price;
 		this.description = description;
-		this.patron = patron;
+		this.person = p;
 	}
 
 	public Long getId() {
@@ -99,12 +99,12 @@ public class Charge {
 		this.description = description;
 	}
 
-	public Patron getPatron() {
-		return patron;
+	public Person getPatron() {
+		return person;
 	}
 
-	public void setPatron(Patron patron) {
-		this.patron = patron;
+	public void setPatron(Person p) {
+		this.person = p;
 	}
 
 	@Override

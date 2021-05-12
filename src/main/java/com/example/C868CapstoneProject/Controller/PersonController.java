@@ -1,6 +1,7 @@
 package com.example.C868CapstoneProject.Controller;
 
 import com.example.C868CapstoneProject.Service.PersonService;
+import com.example.C868CapstoneProject.model.Patron;
 import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +32,14 @@ public class PersonController {
     }
 
     @GetMapping(path = "/cardNumber")
-    public List<Long> getCardNumbers(){
+    public List<Long> getCardNumbers() {
         return personService.getCardNumbers();
     }
 
     @PostMapping(path = "{type}")
     public void postPerson(@PathVariable("type") String type,
                            @RequestParam(required = false) Long cardNumber,
-                           @RequestBody Person person ) {
+                           @RequestBody Person person) {
         personService.postPerson(person, type, cardNumber);
 
     }
@@ -48,7 +49,7 @@ public class PersonController {
             @RequestParam("email") String email,
             @RequestParam("password") String password) {
         System.out.println("Controller.login");
-       return personService.login(email, password);
+        return personService.login(email, password);
     }
 
     @DeleteMapping(path = "{personID}")
@@ -60,19 +61,21 @@ public class PersonController {
     public void updatePerson(
             @PathVariable("personID") Long personID,
             @RequestParam(required = false) Long cardNumber,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String password) {
-
-            personService.updatePerson(personID, name,email, password, cardNumber);
+            @RequestBody Person person) {
+        personService.updatePerson(personID, person, cardNumber);
     }
 
     @GetMapping(path = "/confirm/{personID}")
     public RedirectView updatePerson(
             @PathVariable("personID") String personID) {
-            personService.registerPerson(Long.parseLong(personID));
+        personService.registerPerson(Long.parseLong(personID));
         RedirectView rv = new RedirectView();
         rv.setUrl("127.0.0.1");
         return rv;
+    }
+
+    @GetMapping(path = "/cardNumber/{cardNumber}")
+    public int getPersonByCardNumber(@PathVariable("cardNumber")  Long cardNumber) {
+        return personService.getPersonByCardNumber(cardNumber);
     }
 }

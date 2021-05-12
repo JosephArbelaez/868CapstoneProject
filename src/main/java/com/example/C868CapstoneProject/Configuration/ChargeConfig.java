@@ -17,7 +17,13 @@ public class ChargeConfig {
 							"Overdue", 
 							2.10, 
 							"Overdue Book.");
-				repository.save(charge);
+			Charge charge2 = new Charge(
+					"Broken Book",
+					222.10,
+					"Binding is ruined!!"
+					);
+//				repository.save(charge);
+//				repository.save(charge2);
 		};
 	}
 }

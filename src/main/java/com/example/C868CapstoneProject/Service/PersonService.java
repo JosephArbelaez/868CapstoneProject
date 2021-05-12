@@ -69,8 +69,8 @@ public class PersonService {
     }
 
     @Transactional
-    public void updatePerson(Long personID, String name ,String email, String password, Long cardnumber) {
-        Person person = personRepository.findById(personID).orElseThrow(
+    public void updatePerson(Long personID, Person person, Long cardnumber) {
+        Person personCheck = personRepository.findById(personID).orElseThrow(
                 () -> new IllegalStateException(
                         "Person " +
                                 personID +
@@ -78,26 +78,26 @@ public class PersonService {
 
         System.out.println(person.getClass());
 
-        if (name != null &&
-                name.length() > 0 &&
-                !Objects.equals(person.getName(), name)) {
-            person.setName(name);
+        if (person.getName() != null &&
+                person.getName().length() > 0 &&
+                !Objects.equals(personCheck.getName(), person.getName())) {
+            personCheck.setName(person.getName());
         }
 
-        if (email != null &&
-                email.length() > 0 &&
-                !Objects.equals(person.getEmail(), email)) {
-            person.setEmail(email);
+        if (person.getEmail() != null &&
+                person.getEmail() .length() > 0 &&
+                !Objects.equals(personCheck.getEmail(), person.getEmail() )) {
+            personCheck.setEmail(person.getEmail() );
         }
 
-        if (password != null &&
-                password.length() > 0 &&
-                !Objects.equals(person.getPassword(), password)) {
-            person.setPassword(password);
+        if (person.getPassword() != null &&
+                person.getPassword().length() > 0 &&
+                !Objects.equals(personCheck.getPassword(), person.getPassword())) {
+            personCheck.setPassword(person.getPassword());
         }
         if (cardnumber != null &&
                 cardnumber != 0) {
-            Patron p = (Patron) person;
+            Patron p = (Patron) personCheck;
             p.setCardNumber(cardnumber);
         }
     }
@@ -148,5 +148,9 @@ public class PersonService {
         } catch (Exception e) {
 //            throw new ResponseStatusException(HttpStatus.valueOf(302), "Registration Successful");
         }
+    }
+
+    public int getPersonByCardNumber(Long cardNumber) {
+        return personRepository.getPersonByCardNumber(cardNumber);
     }
 }

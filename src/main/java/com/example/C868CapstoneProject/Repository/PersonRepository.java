@@ -18,4 +18,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query(value = "UPDATE person SET activated = true WHERE id = ?1", nativeQuery = true)
     void registerPersonByID(Long personID);
+
+    @Query(value = "SELECT id from person where card_number = ?1", nativeQuery = true)
+    int getPersonByCardNumber(Long cardNumber);
 }

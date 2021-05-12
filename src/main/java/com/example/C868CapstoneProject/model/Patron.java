@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="patron")
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("Patron")
 public class Patron extends Person {
@@ -13,12 +12,6 @@ public class Patron extends Person {
             name = "cardNumber"
     )
     Long cardNumber;
-
-    @OneToMany(mappedBy="patron")
-    private Set<Book> books;
-
-    @OneToMany(mappedBy="patron")
-    private Set<Charge> charges;
 
     public Patron() {
     }
