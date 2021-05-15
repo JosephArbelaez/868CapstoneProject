@@ -1,6 +1,7 @@
 package com.example.C868CapstoneProject.Controller;
 
 import com.example.C868CapstoneProject.Service.PersonService;
+import com.example.C868CapstoneProject.model.Admin;
 import com.example.C868CapstoneProject.model.Patron;
 import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,23 @@ public class PersonController {
         return personService.getCardNumbers();
     }
 
-    @PostMapping(path = "{type}")
-    public void postPerson(@PathVariable("type") String type,
-                           @RequestParam(required = false) Long cardNumber,
-                           @RequestBody Person person) {
-        personService.postPerson(person, type, cardNumber);
+    @GetMapping(path = "/admin")
+    public List<Admin> getAdmins() {
+        return personService.getAdmins();
+    }
 
+    @GetMapping(path = "/patron")
+    public List<Patron> getPatrons() {
+        return personService.getPatrons();
+    }
+
+    @PostMapping(path = "/patron")
+    public void postPerson(@RequestBody Patron patron) {
+        personService.postPatron(patron);
+    }
+    @PostMapping(path = "/admin")
+    public void postPerson(@RequestBody Admin admin) {
+        personService.postAdmin(admin);
     }
 
     @GetMapping(path = "login")
@@ -57,12 +69,16 @@ public class PersonController {
         personService.deletePerson(personID);
     }
 
-    @PutMapping(path = "{personID}")
-    public void updatePerson(
-            @PathVariable("personID") Long personID,
-            @RequestParam(required = false) Long cardNumber,
-            @RequestBody Person person) {
-        personService.updatePerson(personID, person, cardNumber);
+    @PutMapping("/patron")
+    public void updatePatron(
+            @RequestBody Patron patron) {
+        personService.updatePatron(patron);
+    }
+
+    @PutMapping("/admin")
+    public void updateAdmin(
+            @RequestBody Admin admin) {
+        personService.updateAdmin(admin);
     }
 
     @GetMapping(path = "/confirm/{personID}")

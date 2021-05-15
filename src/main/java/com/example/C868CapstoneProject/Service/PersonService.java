@@ -48,6 +48,30 @@ public class PersonService {
 
         }
     }
+
+    @Transactional
+    public void postPatron(Patron patron) {
+        Optional<Person> patronOptional = personRepository.findById(patron.getUserID());
+
+        if (patronOptional.isPresent()) {
+            throw new IllegalStateException("Person is present");
+        } else {
+            personRepository.save(patron);
+            email(patron);
+        }
+    }
+
+    @Transactional
+    public void postAdmin(Admin admin) {
+        Optional<Person> patronOptional = personRepository.findById(admin.getUserID());
+
+        if (patronOptional.isPresent()) {
+            throw new IllegalStateException("Person is present");
+        } else {
+            personRepository.save(admin);
+            email(admin);
+        }
+    }
     public void email(Person person) {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -69,58 +93,61 @@ public class PersonService {
     }
 
     @Transactional
-    public void updatePerson(Long personID, Person person, Long cardnumber) {
-        Person personCheck = personRepository.findById(personID).orElseThrow(
+    public void updatePatron(Patron patron) {
+        Person personCheck = personRepository.findById(patron.getUserID()).orElseThrow(
                 () -> new IllegalStateException(
                         "Person " +
-                                personID +
+                                patron.getUserID() +
                                 " does not exist."));
 
-        System.out.println(person.getClass());
-
-        if (person.getName() != null &&
-                person.getName().length() > 0 &&
-                !Objects.equals(personCheck.getName(), person.getName())) {
-            personCheck.setName(person.getName());
+        if (patron.getName() != null &&
+                patron.getName().length() > 0 &&
+                !Objects.equals(personCheck.getName(), patron.getName())) {
+            personCheck.setName(patron.getName());
         }
 
-        if (person.getEmail() != null &&
-                person.getEmail() .length() > 0 &&
-                !Objects.equals(personCheck.getEmail(), person.getEmail() )) {
-            personCheck.setEmail(person.getEmail() );
+        if (patron.getEmail() != null &&
+                patron.getEmail() .length() > 0 &&
+                !Objects.equals(personCheck.getEmail(), patron.getEmail() )) {
+            personCheck.setEmail(patron.getEmail() );
         }
 
-        if (person.getPassword() != null &&
-                person.getPassword().length() > 0 &&
-                !Objects.equals(personCheck.getPassword(), person.getPassword())) {
-            personCheck.setPassword(person.getPassword());
+        if (patron.getPassword() != null &&
+                patron.getPassword().length() > 0 &&
+                !Objects.equals(personCheck.getPassword(), patron.getPassword())) {
+            personCheck.setPassword(patron.getPassword());
         }
-        if (cardnumber != null &&
-                cardnumber != 0) {
+        if (patron.getCardNumber() != null &&
+                patron.getCardNumber() != 0) {
             Patron p = (Patron) personCheck;
-            p.setCardNumber(cardnumber);
+            p.setCardNumber(patron.getCardNumber());
         }
     }
 
     @Transactional
-    public void updateAdmin(Long personID,String email, String password) {
-        Patron person = (Patron) personRepository.findById(personID).orElseThrow(
-                () -> new IllegalStateException (
+    public void updateAdmin(Admin admin) {
+        Person personCheck = personRepository.findById(admin.getUserID()).orElseThrow(
+                () -> new IllegalStateException(
                         "Person " +
-                                personID +
+                                admin.getUserID() +
                                 " does not exist."));
 
-        if (email != null &&
-                email.length() > 0 &&
-                !Objects.equals(person.getName(), email)) {
-            person.setEmail(email);
+        if (admin.getName() != null &&
+                admin.getName().length() > 0 &&
+                !Objects.equals(personCheck.getName(), admin.getName())) {
+            personCheck.setName(admin.getName());
         }
 
-        if (password != null &&
-                password.length() > 0 &&
-                password.length() > 0 &&
-                !Objects.equals(person.getPassword(), password)) {
-            person.setPassword(password);
+        if (admin.getEmail() != null &&
+                admin.getEmail() .length() > 0 &&
+                !Objects.equals(personCheck.getEmail(), admin.getEmail() )) {
+            personCheck.setEmail(admin.getEmail() );
+        }
+
+        if (admin.getPassword() != null &&
+                admin.getPassword().length() > 0 &&
+                !Objects.equals(personCheck.getPassword(), admin.getPassword())) {
+            personCheck.setPassword(admin.getPassword());
         }
     }
 
@@ -130,9 +157,13 @@ public class PersonService {
 
     public Person login(String email, String password) {
         try {
-            return personRepository.findByEmail(email);
+            Person personTemp = personRepository.findByEmail(email);
+            if(personTemp.getPassword().equals(password)){
+                return personTemp;
+            } else{
+                throw new Exception("Incorrect Password");
+            }
         } catch(Exception e) {
-            e.printStackTrace();
             e.printStackTrace();
             return null;
         }
@@ -152,5 +183,13 @@ public class PersonService {
 
     public int getPersonByCardNumber(Long cardNumber) {
         return personRepository.getPersonByCardNumber(cardNumber);
+    }
+
+    public List<Admin> getAdmins() {
+        return personRepository.findAdmins();
+    }
+
+    public List<Patron> getPatrons() {
+        return personRepository.findPatrons();
     }
 }

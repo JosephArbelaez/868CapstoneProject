@@ -23,7 +23,20 @@ public class BookController {
 		public List<Book> getBooks() {
 			return bookService.getBooks();
 		}
-		
+
+		@GetMapping(path = "{query}")
+		public List<Book> getBooks(@PathVariable("query") String query) {
+			return bookService.searchBooks(query);
+		}
+
+		@GetMapping(path = "checked")
+		public List<Book> getCheckedBooks() {
+			return bookService.getCheckedBooks();
+		}
+		@GetMapping(path = "unchecked")
+		public List<Book> getUncheckedBooks() {
+			return bookService.getUncheckedBooks();
+		}
 		@PostMapping
 		public void postBook(@RequestBody Book book) {
 			bookService.postBook(book);
@@ -34,13 +47,9 @@ public class BookController {
 			bookService.deleteBook(isbn);
 		}
 		
-		@PutMapping(path = "{isbn}")
-		public void updateBook(
-				@PathVariable("isbn") Long isbn,
-				@RequestParam(required = false) String title,
-				@RequestParam(required = false) String genre,
-				@RequestParam(required = false) String url) {
-			bookService.updateBook(isbn, title, genre, url);
+		@PutMapping
+		public void updateBook(@RequestBody Book book) {
+			bookService.updateBook(book);
 		}
 		
 	}

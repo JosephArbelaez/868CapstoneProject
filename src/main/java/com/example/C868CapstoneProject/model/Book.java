@@ -173,7 +173,7 @@ public class Book {
 		this.genre = genre;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
@@ -185,7 +185,7 @@ public class Book {
 		return person;
 	}
 
-	public void setPerson(Patron person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 

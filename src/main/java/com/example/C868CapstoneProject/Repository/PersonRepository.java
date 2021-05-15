@@ -10,8 +10,11 @@ import java.util.Optional;
 public interface PersonRepository extends JpaRepository<Person, Long> {
     Person findByEmail(String email);
 
-    @Query(value = "SELECT type from person WHERE id=?1", nativeQuery = true)
-    String findByType(Long id);
+    @Query("SELECT p FROM Person p WHERE type = 'Admin'")
+    List<Admin> findAdmins();
+
+    @Query("SELECT p FROM Person p WHERE type = 'Patron'")
+    List<Patron> findPatrons();
 
     @Query(value = "SELECT card_Number from person", nativeQuery = true)
     List<Long> getCardNumbers();
