@@ -27,9 +27,11 @@ public class ChargeController {
         return chargeService.getCharges();
     }
 
-    @PostMapping
-    public void postCharge(@RequestBody Charge charge) {
-        chargeService.postCharge(charge);
+    @PostMapping(path = "{userID}")
+    public void postCharge(
+            @PathVariable("userID") Long id,
+            @RequestBody Charge charge) {
+        chargeService.postCharge(id, charge);
     }
 
     @DeleteMapping(path = "{chargeID}")

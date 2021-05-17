@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
+
 @Configuration
 public class BookConfig {
 	
@@ -19,16 +21,17 @@ public class BookConfig {
 							416, 
 							12.74,
 							"Graphic Novels",
-							false,
-							"https://images-na.ssl-images-amazon.com/images/I/410D4H0IqjL._SX318_BO1,204,203,200_.jpg");
+							"Checked",
+							"https://images-na.ssl-images-amazon.com/images/I/410D4H0IqjL._SX318_BO1,204,203,200_.jpg",
+								LocalDate.now());
 				Book unstoppable =new Book(9781250007148L,
 							"unstoppable",
 							"Bill Nye",
 							"In UNSTOPPABLE, Bill Nye crystallizes and expands the message for which he is best known and beloved. That message is that with a combination of optimism and scientific curiosity, all obstacles become opportunities, and the possibilities of our world become limitless. With a scientist's thirst for knowledge and an engineer's vision of what can be, Bill Nye sees today's environmental issues not as insurmountable, depressing problems but as chances for our society to rise to the challenge and create a cleaner, healthier, smarter world. We need not accept that transportation consumes half our energy, and that two-thirds of the energy you put into your car is immediately thrown away out the tailpipe. We need not accept that dangerous emissions are the price we must pay for a vibrant economy and a comfortable life. Above all, we need not accept that we will leave our children a planet that is dirty, overheated, and depleted of resources. As Bill shares his vision, he debunks some of the most persistent myths and misunderstandings about global warming. When you are done reading, you'll be enlightened and empowered. Chances are, you'll be smiling, too, ready to join Bill and change the world.",
 							368,
 							17.99,
-							"NonFiction",
-							false,
+							"Non Fiction",
+							"Reserved",
 							"https://pictures.abebooks.com/isbn/9781250007148-us.jpg"
 						);
 				Book book = new Book(316017930L,
@@ -42,7 +45,7 @@ public class BookConfig {
 						321,
 						16.99,
 						"NonFiction",
-						true,
+						null,
 						"https://images-na.ssl-images-amazon.com/images/I/41LO6QRvIuL._SX331_BO1,204,203,200_.jpg");
 				repository.save(watchmen);
 				repository.save(unstoppable);

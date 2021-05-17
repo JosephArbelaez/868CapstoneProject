@@ -1,6 +1,7 @@
 package com.example.C868CapstoneProject.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity(name = "Book")
 public class Book {
@@ -57,9 +58,9 @@ public class Book {
 	@Column(
 			name = "status",
 			nullable = true,
-			columnDefinition = "BOOLEAN"
+			columnDefinition = "TEXT"
 	)
-	private boolean status;
+	private String status;
 
 	@Column(
 			name = "url",
@@ -67,6 +68,13 @@ public class Book {
 			columnDefinition = "TEXT"
 	)
 	private String url;
+
+	@Column (
+			name = "checkoutDate",
+			nullable = true,
+			columnDefinition = "DATE"
+	)
+	private LocalDate checkoutDate;
 
 	@ManyToOne
 	@JoinColumn(name="person_id")
@@ -76,7 +84,7 @@ public class Book {
 		
 	}
 	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre,
-				boolean status) {
+				String status) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -86,9 +94,10 @@ public class Book {
 		this.price = price;
 		this.genre = genre;
 		this.status = status;
+		this.checkoutDate = null;
 	}
 	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre,
-			boolean status, String url) {
+			String status, String url) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -99,9 +108,25 @@ public class Book {
 		this.genre = genre;
 		this.status = status;
 		this.url = url;
+		this.checkoutDate = null;
 	}
 
-	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre, boolean status, String url,Person p) {
+	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre,
+				String status, String url, LocalDate checkoutDate) {
+		super();
+		this.isbn = isbn;
+		this.title = title;
+		this.author = author;
+		this.description = description;
+		this.pageCount = pageCount;
+		this.price = price;
+		this.genre = genre;
+		this.status = status;
+		this.url = url;
+		this.checkoutDate = checkoutDate;
+	}
+
+	public Book(Long isbn, String title, String author, String description, int pageCount, double price, String genre, String status, String url,Person p) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -113,6 +138,7 @@ public class Book {
 		this.status = status;
 		this.person = p;
 		this.url = url;
+		this.checkoutDate = null;
 	}
 
 
@@ -173,11 +199,11 @@ public class Book {
 		this.genre = genre;
 	}
 
-	public boolean getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -195,5 +221,13 @@ public class Book {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public LocalDate getCheckoutDate() {
+		return checkoutDate;
+	}
+
+	public void setCheckoutDate(LocalDate checkoutDate) {
+		this.checkoutDate = checkoutDate;
 	}
 }

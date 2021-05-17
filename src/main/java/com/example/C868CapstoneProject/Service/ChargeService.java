@@ -2,8 +2,11 @@ package com.example.C868CapstoneProject.Service;
 
 import com.example.C868CapstoneProject.Repository.BookRepository;
 import com.example.C868CapstoneProject.Repository.ChargeRepository;
+import com.example.C868CapstoneProject.Repository.PersonRepository;
 import com.example.C868CapstoneProject.model.Book;
 import com.example.C868CapstoneProject.model.Charge;
+import com.example.C868CapstoneProject.model.Patron;
+import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +19,27 @@ import java.util.Optional;
 public class ChargeService {
 
     private final ChargeRepository chargeRepository;
+    private final PersonRepository personRepository;
 
     @Autowired
-    public ChargeService(ChargeRepository chargeRepository) {
+    public ChargeService(ChargeRepository chargeRepository, PersonRepository personReposiory) {
         this.chargeRepository = chargeRepository;
+        this.personRepository = personReposiory;
     }
 
     public List<Charge> getCharges() {
         return chargeRepository.findAll();
     }
 
-    public void postCharge(Charge charge) {
+    public void postCharge(Long id, Charge charge) {
+        Optional<Person> personOptional = personRepository.findById(id);
         Optional<Charge> chargeOptional = chargeRepository.findById(charge.getId());
 
         if(chargeOptional.isPresent()) {
             throw new IllegalStateException("Charge is present");
         } else {
+
+            charge.setPatron(personOptional.get());
             chargeRepository.save(charge);
 
         }

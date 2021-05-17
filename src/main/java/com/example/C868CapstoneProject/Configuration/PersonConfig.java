@@ -23,7 +23,7 @@ public class PersonConfig {
             );
             Patron b = new Patron(
                     "Francis Freedmont",
-                    "Ffreed@gmail.com",
+                    "ffreed@gmail.com",
                     "password",
                     "https://c868finalproject.s3.us-east-2.amazonaws.com/Francis.jpg",
                     1234567L
