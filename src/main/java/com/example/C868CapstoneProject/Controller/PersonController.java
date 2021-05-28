@@ -48,11 +48,11 @@ public class PersonController {
     }
 
     @PostMapping(path = "/patron")
-    public void postPerson(@RequestBody Patron patron) {
+    public void postPatron(@RequestBody Patron patron) {
         personService.postPatron(patron);
     }
     @PostMapping(path = "/admin")
-    public void postPerson(@RequestBody Admin admin) {
+    public void postAdmin(@RequestBody Admin admin) {
         personService.postAdmin(admin);
     }
 

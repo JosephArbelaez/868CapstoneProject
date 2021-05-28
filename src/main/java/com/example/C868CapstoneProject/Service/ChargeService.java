@@ -22,9 +22,9 @@ public class ChargeService {
     private final PersonRepository personRepository;
 
     @Autowired
-    public ChargeService(ChargeRepository chargeRepository, PersonRepository personReposiory) {
+    public ChargeService(ChargeRepository chargeRepository, PersonRepository personRepository) {
         this.chargeRepository = chargeRepository;
-        this.personRepository = personReposiory;
+        this.personRepository = personRepository;
     }
 
     public List<Charge> getCharges() {
@@ -39,7 +39,7 @@ public class ChargeService {
             throw new IllegalStateException("Charge is present");
         } else {
 
-            charge.setPatron(personOptional.get());
+            charge.setPerson(personOptional.get());
             chargeRepository.save(charge);
 
         }

@@ -1,7 +1,10 @@
 package com.example.C868CapstoneProject.Service;
 
+import com.example.C868CapstoneProject.Repository.BookRepository;
+import com.example.C868CapstoneProject.Repository.ChargeRepository;
 import com.example.C868CapstoneProject.Repository.PersonRepository;
 import com.example.C868CapstoneProject.model.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,10 +22,16 @@ import java.util.Optional;
 public class PersonService {
 
     private final PersonRepository personRepository;
+    private final ChargeRepository chargeRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository,
+                         ChargeRepository chargeRepository,
+                         BookRepository bookRepository) {
         this.personRepository = personRepository;
+        this.chargeRepository = chargeRepository;
+        this.bookRepository = bookRepository;
     }
     @Autowired EmailService emailService;
 
@@ -159,6 +169,29 @@ public class PersonService {
         try {
             Person personTemp = personRepository.findByEmail(email);
             if(personTemp.getPassword().equals(password)){
+                LocalDate duedate = LocalDate.now().minusDays(14);
+                List<Book> lateBooks = bookRepository.getLateBooks(duedate);
+                List<Charge> charges = chargeRepository.findAll();
+                boolean exists = false;
+                for(int i = 0; i < lateBooks.size(); i++) {
+                    Charge c = new Charge(
+                            "Overdue Book",
+                            0.10,
+                            (lateBooks.get(i).getTitle() + " Overdue"),
+                            lateBooks.get(i).getPerson());
+                    System.out.println(c);
+                    System.out.println(lateBooks.get(i));
+                    for(int j = 0; j < charges.size(); j++) {
+                        if(charges.get(j).getDate().compareTo(c.getDate()) == 0 &&
+                            charges.get(j).getDescription().equals(c.getDescription())){
+                            exists = true;
+                        }
+                    }
+
+                    if(!exists) {
+                        chargeRepository.save(c);
+                    }
+                }
                 return personTemp;
             } else{
                 throw new Exception("Incorrect Password");
@@ -167,6 +200,8 @@ public class PersonService {
             e.printStackTrace();
             return null;
         }
+
+
     }
 
     public List<Long> getCardNumbers() {

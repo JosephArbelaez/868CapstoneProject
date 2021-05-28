@@ -1,5 +1,6 @@
 package com.example.C868CapstoneProject.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -8,8 +9,10 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import com.example.C868CapstoneProject.Repository.BookRepository;
+import com.example.C868CapstoneProject.Repository.PersonRepository;
 import com.example.C868CapstoneProject.model.Book;
 import com.example.C868CapstoneProject.model.Patron;
+import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,12 @@ import org.springframework.stereotype.Service;
 public class BookService {
 		
 	private final BookRepository bookRepository;
+	private final PersonRepository personRepository;
 	
 	@Autowired
-	public BookService(BookRepository bookRepository) {
+	public BookService(BookRepository bookRepository, PersonRepository personRepository) {
 		this.bookRepository = bookRepository;
+		this.personRepository = personRepository;
 	}
 	
 	public List<Book> getBooks() {
@@ -55,6 +60,7 @@ public class BookService {
 
 	@Transactional
 	public void updateBook(Book book) {
+
 		Book bookTemp = bookRepository.findBookByISBN(book.getIsbn()).orElseThrow(
 				() -> new IllegalStateException (
 						"Book with ISBN " +
@@ -101,10 +107,6 @@ public class BookService {
 				!Objects.equals(bookTemp.getUrl(), book.getUrl())) {
 			bookTemp.setGenre(book.getUrl());
 		}
-
-		if (!Objects.equals(bookTemp.getPerson(), book.getPerson())) {
-			bookTemp.setPerson(book.getPerson());
-		}
 	}
 
     public List<Book> getCheckedBooks() {
@@ -113,5 +115,23 @@ public class BookService {
 
 	public List<Book> getUncheckedBooks() {
 		return bookRepository.findUncheckedBooks();
+	}
+
+	public List<Book> getBooksByGenre(String genre) {
+		return bookRepository.findBooksByGenre(genre);
+	}
+
+	public void reserveBook(Long userID, Book book) {
+		Person person = personRepository.findById(userID).get();
+		book.setPerson(person);
+		book.setCheckoutDate(LocalDate.now());
+		bookRepository.save(book);
+	}
+
+	public void checkInBook(Book book) {
+			book.setPerson(null);
+			book.setCheckoutDate(null);
+			book.setStatus(null);
+			bookRepository.save(book);
 	}
 }

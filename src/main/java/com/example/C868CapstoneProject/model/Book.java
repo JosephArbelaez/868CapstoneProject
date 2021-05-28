@@ -230,4 +230,21 @@ public class Book {
 	public void setCheckoutDate(LocalDate checkoutDate) {
 		this.checkoutDate = checkoutDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Book{" +
+				"isbn=" + isbn +
+				", title='" + title + '\'' +
+				", author='" + author + '\'' +
+				", description='" + description + '\'' +
+				", pageCount=" + pageCount +
+				", price=" + price +
+				", genre='" + genre + '\'' +
+				", status='" + status + '\'' +
+				", url='" + url + '\'' +
+				", checkoutDate=" + checkoutDate +
+				", person=" + person +
+				'}';
+	}
 }

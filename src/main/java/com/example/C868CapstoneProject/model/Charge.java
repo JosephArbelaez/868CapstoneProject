@@ -2,6 +2,8 @@ package com.example.C868CapstoneProject.model;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Charge")
@@ -44,6 +46,13 @@ public class Charge {
 	)
 	private String description;
 
+	@Column (
+			name = "date",
+			nullable = false,
+			columnDefinition = "DATE"
+	)
+	private LocalDate date;
+
 	@ManyToOne
 	@JoinColumn(name="person_id")
 	private Person person;
@@ -57,6 +66,7 @@ public class Charge {
 		this.type = type;
 		this.price = price;
 		this.description = description;
+		this.date = LocalDate.now();
 	}
 
 	public Charge(String type, double price, String description, Person p) {
@@ -64,6 +74,7 @@ public class Charge {
 		this.type = type;
 		this.price = price;
 		this.description = description;
+		this.date = LocalDate.now();
 		this.person = p;
 	}
 
@@ -99,12 +110,20 @@ public class Charge {
 		this.description = description;
 	}
 
-	public Person getPatron() {
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPatron(Person p) {
-		this.person = p;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	@Override

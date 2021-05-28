@@ -3,6 +3,8 @@ package com.example.C868CapstoneProject.model;
 import javax.persistence.*;
 import java.util.Set;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 @Entity
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("Patron")
