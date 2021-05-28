@@ -122,9 +122,10 @@ public class BookService {
 	}
 
 	public void reserveBook(Long userID, Book book) {
+		Book bookDB = bookRepository.findBookByISBN(book.getIsbn()).get();
 		Person person = personRepository.findById(userID).get();
-		book.setPerson(person);
-		book.setCheckoutDate(LocalDate.now());
+		bookDB.setPerson(person);
+		bookDB.setCheckoutDate(LocalDate.now());
 		bookRepository.save(book);
 	}
 
