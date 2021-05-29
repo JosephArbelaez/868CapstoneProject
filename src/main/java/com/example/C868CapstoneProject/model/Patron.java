@@ -1,9 +1,6 @@
 package com.example.C868CapstoneProject.model;
 
 import javax.persistence.*;
-import java.util.Set;
-
-import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
@@ -22,10 +19,12 @@ public class Patron extends Person {
         super(name, email, password);
         this.cardNumber = cardNumber;
     }
-    public Patron(String name, String email, String password, String url,Long cardNumber) {
+
+    public Patron(String name, String email, String password, String url, Long cardNumber) {
         super(name, email, password, url);
         this.cardNumber = cardNumber;
     }
+
     public Long getCardNumber() {
         return cardNumber;
     }

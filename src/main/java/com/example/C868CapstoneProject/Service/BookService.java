@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import com.example.C868CapstoneProject.Repository.BookRepository;
 import com.example.C868CapstoneProject.Repository.PersonRepository;
 import com.example.C868CapstoneProject.model.Book;
-import com.example.C868CapstoneProject.model.Patron;
 import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,11 +120,12 @@ public class BookService {
 		return bookRepository.findBooksByGenre(genre);
 	}
 
-	public void reserveBook(Long userID, Book book) {
-		Book bookDB = bookRepository.findBookByISBN(book.getIsbn()).get();
+	public void reserveBook(Long userID, Long isbn) {
+		Book book = bookRepository.findBookByISBN(isbn).get();
 		Person person = personRepository.findById(userID).get();
-		bookDB.setPerson(person);
-		bookDB.setCheckoutDate(LocalDate.now());
+		book.setPerson(person);
+		book.setCheckoutDate(LocalDate.now());
+		book.setStatus("Reserved");
 		bookRepository.save(book);
 	}
 

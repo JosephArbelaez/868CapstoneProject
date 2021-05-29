@@ -6,13 +6,9 @@ import com.example.C868CapstoneProject.Repository.PersonRepository;
 import com.example.C868CapstoneProject.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +29,6 @@ public class PersonService {
         this.chargeRepository = chargeRepository;
         this.bookRepository = bookRepository;
     }
-    @Autowired EmailService emailService;
 
     public List<Person> getPeople() {
         return personRepository.findAll();
@@ -49,11 +44,9 @@ public class PersonService {
             if (type.equals("admin")) {
                 Admin a = new Admin(person.getName(), person.getEmail(), person.getPassword());
                 personRepository.save(a);
-                email(a);
             } else if (type.equals("patron")) {
                 Patron b = new Patron(person.getName(), person.getEmail(), person.getPassword(), cardNumber);
                 personRepository.save(b);
-                email(b);
             }
 
         }
@@ -67,7 +60,6 @@ public class PersonService {
             throw new IllegalStateException("Person is present");
         } else {
             personRepository.save(patron);
-            email(patron);
         }
     }
 
@@ -79,19 +71,9 @@ public class PersonService {
             throw new IllegalStateException("Person is present");
         } else {
             personRepository.save(admin);
-            email(admin);
         }
     }
-    public void email(Person person) {
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setSubject("Complete Registration!");
-        mailMessage.setTo(person.getEmail());
-        mailMessage.setFrom("josepharbelaezwalmart@gmail.com");
-        mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:8080/api/v1/person/confirm/" + personRepository.findByEmail(person.getEmail()).getUserID());
-        emailService.sendEmail(mailMessage);
-    }
     public void deletePerson(Long personID) {
         boolean exists = personRepository.existsById(personID);
 
@@ -132,6 +114,7 @@ public class PersonService {
             Patron p = (Patron) personCheck;
             p.setCardNumber(patron.getCardNumber());
         }
+        personRepository.save(personCheck);
     }
 
     @Transactional
@@ -169,8 +152,8 @@ public class PersonService {
         try {
             Person personTemp = personRepository.findByEmail(email);
             if(personTemp.getPassword().equals(password)){
-                LocalDate duedate = LocalDate.now().minusDays(14);
-                List<Book> lateBooks = bookRepository.getLateBooks(duedate);
+                LocalDate dueDate = LocalDate.now().minusDays(14);
+                List<Book> lateBooks = bookRepository.getLateBooks(dueDate);
                 List<Charge> charges = chargeRepository.findAll();
                 boolean exists = false;
                 for(int i = 0; i < lateBooks.size(); i++) {
@@ -179,8 +162,6 @@ public class PersonService {
                             0.10,
                             (lateBooks.get(i).getTitle() + " Overdue"),
                             lateBooks.get(i).getPerson());
-                    System.out.println(c);
-                    System.out.println(lateBooks.get(i));
                     for(int j = 0; j < charges.size(); j++) {
                         if(charges.get(j).getDate().compareTo(c.getDate()) == 0 &&
                             charges.get(j).getDescription().equals(c.getDescription())){
@@ -200,24 +181,20 @@ public class PersonService {
             e.printStackTrace();
             return null;
         }
-
-
     }
 
     public List<Long> getCardNumbers() {
         return personRepository.getCardNumbers();
     }
 
-    public void registerPerson(Long personID) {
-        try {
-            personRepository.registerPersonByID(personID);
-        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.valueOf(302), "Registration Successful");
-        }
+    public void setPassword(Person person) {
+        Person p = getPersonByID(person.getUserID());
+        p.setPassword(person.getPassword());
+        personRepository.save(p);
     }
 
-    public int getPersonByCardNumber(Long cardNumber) {
-        return personRepository.getPersonByCardNumber(cardNumber);
+    public Long getPersonByCardNumber(Long cardNumber) {
+       return personRepository.getPersonByCardNumber(cardNumber);
     }
 
     public List<Admin> getAdmins() {

@@ -1,15 +1,14 @@
 package com.example.C868CapstoneProject.model;
 
 import javax.persistence.*;
-
 import java.util.Set;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue(value="unclassified")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "unclassified")
 public class Person {
 
     @Id
@@ -57,13 +56,6 @@ public class Person {
     )
     private String url;
 
-    @Column(
-            name = "activated",
-            nullable = true,
-            columnDefinition = "TEXT"
-    )
-    private boolean activated;
-
     @OneToMany
     private Set<Charge> charges;
 
@@ -77,7 +69,6 @@ public class Person {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.activated = false;
     }
 
     public Person(String name, String email, String password, String url) {
@@ -85,7 +76,6 @@ public class Person {
         this.email = email;
         this.password = password;
         this.url = url;
-        this.activated = false;
     }
 
     public Long getUserID() {
@@ -128,14 +118,6 @@ public class Person {
         this.url = url;
     }
 
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
     @Override
     public String toString() {
         return "Person{" +
@@ -144,7 +126,6 @@ public class Person {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", url='" + url + '\'' +
-                ", activated=" + activated +
                 '}';
     }
 }

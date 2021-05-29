@@ -6,7 +6,6 @@ import com.example.C868CapstoneProject.model.Patron;
 import com.example.C868CapstoneProject.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -31,6 +30,17 @@ public class PersonController {
     public Person getPersonByID(@PathVariable("personID") Long personID) {
         return personService.getPersonByID(personID);
     }
+    @GetMapping(path = "/login")
+    public Person login(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+        return personService.login(email, password);
+    }
+
+    @GetMapping(path = "/cardNumber/{cardNumber}")
+    public Long getPersonByCardNumber(@PathVariable("cardNumber") Long cardNumber) {
+        return personService.getPersonByCardNumber(cardNumber);
+    }
 
     @GetMapping(path = "/cardNumber")
     public List<Long> getCardNumbers() {
@@ -51,22 +61,10 @@ public class PersonController {
     public void postPatron(@RequestBody Patron patron) {
         personService.postPatron(patron);
     }
+
     @PostMapping(path = "/admin")
     public void postAdmin(@RequestBody Admin admin) {
         personService.postAdmin(admin);
-    }
-
-    @GetMapping(path = "login")
-    public Person login(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
-        System.out.println("Controller.login");
-        return personService.login(email, password);
-    }
-
-    @DeleteMapping(path = "{personID}")
-    public void deletePerson(@PathVariable("personID") Long personID) {
-        personService.deletePerson(personID);
     }
 
     @PutMapping("/patron")
@@ -81,17 +79,14 @@ public class PersonController {
         personService.updateAdmin(admin);
     }
 
-    @GetMapping(path = "/confirm/{personID}")
-    public RedirectView updatePerson(
-            @PathVariable("personID") String personID) {
-        personService.registerPerson(Long.parseLong(personID));
-        RedirectView rv = new RedirectView();
-        rv.setUrl("127.0.0.1");
-        return rv;
+    @PutMapping("/register")
+    public void registerPerson(
+            @RequestBody Person person) {
+        personService.setPassword(person);
     }
 
-    @GetMapping(path = "/cardNumber/{cardNumber}")
-    public int getPersonByCardNumber(@PathVariable("cardNumber")  Long cardNumber) {
-        return personService.getPersonByCardNumber(cardNumber);
+    @DeleteMapping(path = "{personID}")
+    public void deletePerson(@PathVariable("personID") Long personID) {
+        personService.deletePerson(personID);
     }
 }
