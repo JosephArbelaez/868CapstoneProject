@@ -76,11 +76,20 @@ public class PersonService {
 
     public void deletePerson(Long personID) {
         boolean exists = personRepository.existsById(personID);
+        List<Book> bookList = bookRepository.findCheckedBooks();
 
         if(!exists) {
             throw new IllegalStateException("Person " + personID + " does not exist.");
         }
 
+        for(int i = 0; i < bookList.size(); i++){
+            if(bookList.get(i).getPerson().getUserID() == personID){
+                bookList.get(i).setPerson(null);
+                bookList.get(i).setCheckoutDate(null);
+                bookList.get(i).setStatus(null);
+                bookRepository.save(bookList.get(i));
+            }
+        }
         personRepository.deleteById(personID);
     }
 
